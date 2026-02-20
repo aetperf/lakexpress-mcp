@@ -756,7 +756,7 @@ async def handle_validate_auth_file(arguments: Dict[str, Any]) -> list[TextConte
             "# Auth File Validation - OK",
             "",
             f"**File**: {file_path}",
-            f"**Valid JSON**: Yes",
+            "**Valid JSON**: Yes",
             f"**Entries**: {entry_count}",
         ]
         if required_auth_ids:
@@ -944,7 +944,7 @@ def _build_command_explanation(request: LakeXpressRequest) -> str:
     elif cmd == CommandType.CONFIG_CREATE:
         p = request.config_create
         if p:
-            parts.append(f"Create a new sync configuration")
+            parts.append("Create a new sync configuration")
             parts.append(f"Source database: {p.source_db_auth_id}")
             if p.source_schema_name:
                 parts.append(f"Source schema(s): {p.source_schema_name}")

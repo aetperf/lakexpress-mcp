@@ -625,8 +625,8 @@ def suggest_workflow(
     # Step 2: Create sync configuration
     config_desc = f"Create sync configuration for {source_type} source"
     config_example = (
-        f"LakeXpress config create -a auth.json --log_db_auth_id export_db "
-        f"--source_db_auth_id source_db"
+        "LakeXpress config create -a auth.json --log_db_auth_id export_db "
+        "--source_db_auth_id source_db"
     )
     if destination == "local":
         config_example += " --output_dir ./exports"
