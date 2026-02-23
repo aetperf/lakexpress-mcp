@@ -1,5 +1,18 @@
 # Changelog
 
+All notable changes to the LakeXpress MCP Server will be documented in this file.
+
+## [0.1.1] - 2026-02-23
+
+### Added
+
+- `server.json` MCP Registry configuration file with package metadata, transport settings, and environment variable definitions
+
+### Changed
+
+- GitHub repository URL updated from `aetperf/lakexpress-mcp` to `arpe-io/lakexpress-mcp` in `pyproject.toml`
+
+
 ## [0.1.0] - 2026-02-20
 
 ### Added
