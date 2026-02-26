@@ -39,7 +39,8 @@ Add to your Claude Code MCP settings:
       "env": {
         "LAKEXPRESS_PATH": "/path/to/LakeXpress",
         "LAKEXPRESS_TIMEOUT": "3600",
-        "LAKEXPRESS_LOG_DIR": "./logs"
+        "LAKEXPRESS_LOG_DIR": "./logs",
+        "FASTBCP_DIR_PATH": "/path/to/FastBCP/"
       }
     }
   }
@@ -54,7 +55,8 @@ Or using the installed entry point:
     "lakexpress": {
       "command": "lakexpress-mcp",
       "env": {
-        "LAKEXPRESS_PATH": "/path/to/LakeXpress"
+        "LAKEXPRESS_PATH": "/path/to/LakeXpress",
+        "FASTBCP_DIR_PATH": "/path/to/FastBCP/"
       }
     }
   }
@@ -106,6 +108,7 @@ LakeXpress status -a auth.json --log_db_auth_id export_db --sync_id <sync_id>
 | `LAKEXPRESS_PATH` | `./LakeXpress` | Path to the LakeXpress binary |
 | `LAKEXPRESS_TIMEOUT` | `3600` | Command execution timeout in seconds |
 | `LAKEXPRESS_LOG_DIR` | `./logs` | Directory for execution logs |
+| `FASTBCP_DIR_PATH` | _(empty)_ | Path to FastBCP binary directory (auto-fills `fastbcp_dir_path` parameter) |
 | `LOG_LEVEL` | `INFO` | Logging level (DEBUG, INFO, WARNING, ERROR) |
 
 ## Development
