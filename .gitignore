@@ -48,6 +48,15 @@ htmlcov/
 logs/
 *.log
 
+# Credentials
+credentials.json
+
+# Local MCP config
+.mcp.json
+
+# Demo exports
+demo/exports/
+
 # OS
 .DS_Store
 Thumbs.db
