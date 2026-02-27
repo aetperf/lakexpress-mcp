@@ -331,3 +331,34 @@ class VersionDetector:
 
         # If detected version is older than all known, fall back to latest
         return best if best is not None else _SORTED_VERSIONS[-1][1]
+
+
+def check_version_compatibility(
+    command: str,
+    params: dict,
+    capabilities: VersionCapabilities,
+    detected_version: Optional[LakeXpressVersion],
+) -> list[str]:
+    """Check for version-gated features and return warning strings.
+
+    Args:
+        command: The command type (e.g. "sync", "sync_export", "config_create")
+        params: The parameters dict for that command
+        capabilities: Resolved capabilities for the detected version
+        detected_version: The detected LakeXpress version, or None
+
+    Returns:
+        List of warning strings (empty if all OK)
+    """
+    warnings: list[str] = []
+
+    # quiet_fbcp requires LakeXpress 0.2.9+
+    if command in ("sync", "sync_export") and params.get("quiet_fbcp"):
+        if not capabilities.supports_quiet_fbcp:
+            ver_str = str(detected_version) if detected_version else "unknown"
+            warnings.append(
+                f"--quiet_fbcp requires LakeXpress 0.2.9+, "
+                f"but detected version is {ver_str}"
+            )
+
+    return warnings
