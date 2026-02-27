@@ -9,6 +9,7 @@ from src.version import (
     LakeXpressVersion,
     VersionDetector,
     VERSION_REGISTRY,
+    check_version_compatibility,
 )
 
 
@@ -312,3 +313,64 @@ class TestVersionDetector:
         """Test that supports_quiet_fbcp is False in 0.2.8."""
         caps = VERSION_REGISTRY["0.2.8"]
         assert caps.supports_quiet_fbcp is False
+
+
+class TestCheckVersionCompatibility:
+    """Tests for check_version_compatibility function."""
+
+    def test_quiet_fbcp_on_029_no_warning(self):
+        """quiet_fbcp=True on 0.2.9 produces no warnings."""
+        caps = VERSION_REGISTRY["0.2.9"]
+        version = LakeXpressVersion(0, 2, 9)
+        warnings = check_version_compatibility(
+            "sync", {"quiet_fbcp": True}, caps, version
+        )
+        assert warnings == []
+
+    def test_quiet_fbcp_on_028_produces_warning(self):
+        """quiet_fbcp=True on 0.2.8 produces a warning mentioning 0.2.9."""
+        caps = VERSION_REGISTRY["0.2.8"]
+        version = LakeXpressVersion(0, 2, 8)
+        warnings = check_version_compatibility(
+            "sync", {"quiet_fbcp": True}, caps, version
+        )
+        assert len(warnings) == 1
+        assert "0.2.9" in warnings[0]
+        assert "quiet_fbcp" in warnings[0]
+
+    def test_quiet_fbcp_on_irrelevant_command_no_warning(self):
+        """quiet_fbcp=True on config_create (irrelevant) produces no warnings."""
+        caps = VERSION_REGISTRY["0.2.8"]
+        version = LakeXpressVersion(0, 2, 8)
+        warnings = check_version_compatibility(
+            "config_create", {"quiet_fbcp": True}, caps, version
+        )
+        assert warnings == []
+
+    def test_quiet_fbcp_false_on_028_no_warning(self):
+        """quiet_fbcp=False on 0.2.8 produces no warnings."""
+        caps = VERSION_REGISTRY["0.2.8"]
+        version = LakeXpressVersion(0, 2, 8)
+        warnings = check_version_compatibility(
+            "sync", {"quiet_fbcp": False}, caps, version
+        )
+        assert warnings == []
+
+    def test_quiet_fbcp_sync_export_on_028_produces_warning(self):
+        """quiet_fbcp=True for sync_export on 0.2.8 produces a warning."""
+        caps = VERSION_REGISTRY["0.2.8"]
+        version = LakeXpressVersion(0, 2, 8)
+        warnings = check_version_compatibility(
+            "sync_export", {"quiet_fbcp": True}, caps, version
+        )
+        assert len(warnings) == 1
+        assert "0.2.9" in warnings[0]
+
+    def test_basic_params_no_warnings(self):
+        """Basic params without version-gated features produce no warnings."""
+        caps = VERSION_REGISTRY["0.2.8"]
+        version = LakeXpressVersion(0, 2, 8)
+        warnings = check_version_compatibility(
+            "sync", {"sync_id": "my_sync"}, caps, version
+        )
+        assert warnings == []
