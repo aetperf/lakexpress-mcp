@@ -80,6 +80,7 @@ class VersionCapabilities:
     supports_version_flag: bool = False
     supports_incremental: bool = False
     supports_cleanup: bool = False
+    supports_quiet_fbcp: bool = False
 
 
 # Static version registry: version string -> capabilities
@@ -156,6 +157,81 @@ VERSION_REGISTRY: Dict[str, VersionCapabilities] = {
         supports_version_flag=True,
         supports_incremental=True,
         supports_cleanup=True,
+    ),
+    "0.2.9": VersionCapabilities(
+        source_databases=frozenset(
+            [
+                "sqlserver",
+                "postgresql",
+                "oracle",
+                "mysql",
+                "mariadb",
+                "saphana",
+            ]
+        ),
+        log_databases=frozenset(
+            [
+                "sqlserver",
+                "postgresql",
+                "mysql",
+                "mariadb",
+                "sqlite",
+                "duckdb",
+            ]
+        ),
+        storage_backends=frozenset(
+            [
+                "local",
+                "s3",
+                "s3compatible",
+                "gcs",
+                "azure_adls",
+                "onelake",
+            ]
+        ),
+        publish_targets=frozenset(
+            [
+                "snowflake",
+                "databricks",
+                "fabric",
+                "bigquery",
+                "motherduck",
+                "glue",
+                "ducklake",
+            ]
+        ),
+        compression_types=frozenset(
+            [
+                "Zstd",
+                "Snappy",
+                "Gzip",
+                "Lz4",
+                "None",
+            ]
+        ),
+        commands=frozenset(
+            [
+                "logdb_init",
+                "logdb_drop",
+                "logdb_truncate",
+                "logdb_locks",
+                "logdb_release_locks",
+                "config_create",
+                "config_delete",
+                "config_list",
+                "sync",
+                "sync_export",
+                "sync_publish",
+                "run",
+                "status",
+                "cleanup",
+            ]
+        ),
+        supports_no_banner=True,
+        supports_version_flag=True,
+        supports_incremental=True,
+        supports_cleanup=True,
+        supports_quiet_fbcp=True,
     ),
 }
 
