@@ -341,6 +341,16 @@ class TestCommandBuilder:
         assert "--run_id" in command
         assert "-a" in command
 
+    def test_build_sync_with_quiet_fbcp(self, command_builder):
+        """Test building sync command with quiet_fbcp flag."""
+        request = LakeXpressRequest(
+            command=CommandType.SYNC,
+            sync={"sync_id": "my-sync", "quiet_fbcp": True},
+        )
+        command = command_builder.build_command(request)
+
+        assert "--quiet_fbcp" in command
+
     def test_build_sync_export(self, command_builder):
         """Test building sync[export] command."""
         request = LakeXpressRequest(
@@ -355,6 +365,17 @@ class TestCommandBuilder:
         assert command[1] == "sync[export]"
         assert "--sync_id" in command
         assert "--fastbcp_dir_path" in command
+
+    def test_build_sync_export_with_quiet_fbcp(self, command_builder):
+        """Test building sync[export] command with quiet_fbcp flag."""
+        request = LakeXpressRequest(
+            command=CommandType.SYNC_EXPORT,
+            sync_export={"sync_id": "my-sync", "quiet_fbcp": True},
+        )
+        command = command_builder.build_command(request)
+
+        assert command[1] == "sync[export]"
+        assert "--quiet_fbcp" in command
 
     def test_build_sync_publish(self, command_builder):
         """Test building sync[publish] command."""
@@ -573,12 +594,17 @@ class TestHelperFunctions:
         assert "Compression Types" in caps
         assert "Commands" in caps
 
-        assert len(caps["Source Databases"]) == 5
+        assert len(caps["Source Databases"]) == 6
         assert len(caps["Log Databases"]) == 6
         assert len(caps["Storage Backends"]) == 6
         assert len(caps["Publishing Targets"]) == 7
         assert len(caps["Compression Types"]) == 5
         assert len(caps["Commands"]) == 14
+
+    def test_get_supported_capabilities_includes_saphana(self):
+        """Test that SAP HANA appears in get_supported_capabilities output."""
+        caps = get_supported_capabilities()
+        assert any("saphana" in db.lower() for db in caps["Source Databases"])
 
     def test_suggest_workflow_local_no_publish(self):
         """Test workflow suggestion for local export without publishing."""

@@ -189,8 +189,8 @@ class TestVersionDetector:
         detector.detect()
         caps = detector.capabilities
 
-        # Should get the latest known capabilities (0.2.8)
-        assert caps == VERSION_REGISTRY["0.2.8"]
+        # Should get the latest known capabilities (0.2.9)
+        assert caps == VERSION_REGISTRY["0.2.9"]
 
     @patch("src.version.subprocess.run")
     def test_capabilities_undetected_version(self, mock_run):
@@ -202,7 +202,7 @@ class TestVersionDetector:
         caps = detector.capabilities
 
         # Should fall back to latest known
-        assert caps == VERSION_REGISTRY["0.2.8"]
+        assert caps == VERSION_REGISTRY["0.2.9"]
 
     def test_registry_028_source_completeness(self):
         """Test that 0.2.8 registry has all expected source databases."""
@@ -283,3 +283,32 @@ class TestVersionDetector:
             "cleanup",
         }
         assert caps.commands == expected
+
+    def test_registry_029_exists(self):
+        """Test that 0.2.9 registry entry exists and includes saphana."""
+        assert "0.2.9" in VERSION_REGISTRY
+        caps = VERSION_REGISTRY["0.2.9"]
+        assert "saphana" in caps.source_databases
+
+    def test_registry_029_source_completeness(self):
+        """Test that 0.2.9 has all expected source databases including saphana."""
+        caps = VERSION_REGISTRY["0.2.9"]
+        expected = {
+            "sqlserver",
+            "postgresql",
+            "oracle",
+            "mysql",
+            "mariadb",
+            "saphana",
+        }
+        assert caps.source_databases == expected
+
+    def test_supports_quiet_fbcp_029(self):
+        """Test that supports_quiet_fbcp is True in 0.2.9."""
+        caps = VERSION_REGISTRY["0.2.9"]
+        assert caps.supports_quiet_fbcp is True
+
+    def test_supports_quiet_fbcp_028(self):
+        """Test that supports_quiet_fbcp is False in 0.2.8."""
+        caps = VERSION_REGISTRY["0.2.8"]
+        assert caps.supports_quiet_fbcp is False

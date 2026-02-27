@@ -73,9 +73,9 @@ class TestCommandType:
 class TestSourceDatabaseType:
     """Tests for SourceDatabaseType enum."""
 
-    def test_all_5_source_types(self):
-        """Test that there are exactly 5 source database types."""
-        assert len(SourceDatabaseType) == 5
+    def test_all_6_source_types(self):
+        """Test that there are exactly 6 source database types."""
+        assert len(SourceDatabaseType) == 6
 
     def test_source_types_exist(self):
         """Test all source database types exist."""
@@ -84,6 +84,7 @@ class TestSourceDatabaseType:
         assert SourceDatabaseType("oracle") == SourceDatabaseType.ORACLE
         assert SourceDatabaseType("mysql") == SourceDatabaseType.MYSQL
         assert SourceDatabaseType("mariadb") == SourceDatabaseType.MARIADB
+        assert SourceDatabaseType("saphana") == SourceDatabaseType.SAPHANA
 
 
 class TestLogDatabaseType:
