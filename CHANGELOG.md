@@ -2,6 +2,13 @@
 
 All notable changes to the LakeXpress MCP Server will be documented in this file.
 
+## [0.1.4] - 2026-02-27
+
+### Added
+- SAP HANA (`saphana`) as a supported source database (LakeXpress v0.2.9)
+- `--quiet_fbcp` flag support for `sync` and `sync[export]` commands (LakeXpress v0.2.9)
+- Version registry entry for LakeXpress v0.2.9
+
 ## [0.1.3] - 2026-02-24
 
 ### Added
