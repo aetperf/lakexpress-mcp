@@ -324,6 +324,7 @@ async def list_tools() -> list[Tool]:
                             "log_dir": {"type": "string"},
                             "no_progress": {"type": "boolean", "default": False},
                             "no_banner": {"type": "boolean", "default": False},
+                            "quiet_fbcp": {"type": "boolean", "default": False},
                         },
                     },
                     "sync_export": {
@@ -340,6 +341,7 @@ async def list_tools() -> list[Tool]:
                             "log_dir": {"type": "string"},
                             "no_progress": {"type": "boolean", "default": False},
                             "no_banner": {"type": "boolean", "default": False},
+                            "quiet_fbcp": {"type": "boolean", "default": False},
                         },
                     },
                     "sync_publish": {
