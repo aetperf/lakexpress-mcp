@@ -38,6 +38,7 @@ class SourceDatabaseType(str, Enum):
     ORACLE = "oracle"
     MYSQL = "mysql"
     MARIADB = "mariadb"
+    SAPHANA = "saphana"
 
 
 class LogDatabaseType(str, Enum):
@@ -321,6 +322,7 @@ class SyncParams(BaseModel):
     log_dir: Optional[str] = Field(None, description="Directory for log files")
     no_progress: bool = Field(False, description="Disable progress bar display")
     no_banner: bool = Field(False, description="Suppress the startup banner")
+    quiet_fbcp: bool = Field(False, description="Suppress FastBCP output")
 
 
 class SyncExportParams(BaseModel):
@@ -335,6 +337,7 @@ class SyncExportParams(BaseModel):
     log_dir: Optional[str] = Field(None, description="Directory for log files")
     no_progress: bool = Field(False, description="Disable progress bar display")
     no_banner: bool = Field(False, description="Suppress the startup banner")
+    quiet_fbcp: bool = Field(False, description="Suppress FastBCP output")
 
 
 class SyncPublishParams(BaseModel):
