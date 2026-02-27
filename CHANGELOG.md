@@ -2,6 +2,14 @@
 
 All notable changes to the LakeXpress MCP Server will be documented in this file.
 
+## [0.1.5] - 2026-02-27
+
+### Added
+- Rich descriptions for all properties in MCP tool schemas (helps LLMs provide correct parameters)
+- Conditional requirement notes in descriptions (e.g., "publish_method requires publish_target")
+- Version requirement annotations on version-gated features (e.g., "requires LakeXpress 0.2.9+")
+- Lightweight version-aware warnings in `preview_command` output for incompatible features
+
 ## [0.1.4] - 2026-02-27
 
 ### Added
